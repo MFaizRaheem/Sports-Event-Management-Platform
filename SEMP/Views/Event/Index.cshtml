@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Event>
+
+<h2>Events</h2>
+
+<table>
+    <!-- Display details of the newly created event -->
+    @if (Model.Any())
+    {
+        <tr>
+            <td colspan="2">
+                <h3>Newly Created Event Details</h3>
+                <p>Name: @Model.First().Name</p>
+                <p>Date: @Model.First().Date.ToShortDateString()</p>
+                <p>Location: @Model.First().Location</p>
+
+                <!-- Add Update button with a form for the first event -->
+                @using (Html.BeginForm("Update", "Event", new { eventId = Model.First().Id }, FormMethod.Get))
+                {
+                    @Html.Hidden("eventId", Model.First().Id)
+                    <button type="submit">Update</button>
+                }
+                @using (Html.BeginForm("Delete", "Event", new { eventId = Model.First().Id }, FormMethod.Post))
+                {
+                    @Html.Hidden("eventId", Model.First().Id)
+                    <button type="submit">Delete</button>
+                }
+
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- Display the list of events -->
+<table>
+    @foreach (var eventItem in Model.Where(e => e.Id != (Model.FirstOrDefault()?.Id)))
+    {
+        <tr>
+            <td>
+                <p>Name: @eventItem.Name</p>
+                <p>Date: @eventItem.Date.ToShortDateString()</p>
+                <p>Location: @eventItem.Location</p>
+
+                <!-- Add Update button with a form for each event -->
+                @using (Html.BeginForm("Update", "Event", new { eventId = eventItem.Id }, FormMethod.Get))
+                {
+                    @Html.Hidden("eventId", eventItem.Id)
+                    <button type="submit">Update</button>
+                }
+                @using (Html.BeginForm("Delete", "Event", new { eventId = eventItem.Id }, FormMethod.Post))
+                {
+                    @Html.Hidden("eventId", eventItem.Id)
+                    <button type="submit">Delete</button>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- "Register for an Event" button displayed at last -->
+@using (Html.BeginForm("Create", "Event", FormMethod.Get))
+{
+    <button type="submit">Register for an Event</button>
+}

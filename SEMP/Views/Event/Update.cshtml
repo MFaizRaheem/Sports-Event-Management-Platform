@@ -1,0 +1,25 @@
+﻿@model Event
+
+<h2>Update Event</h2>
+
+@using (Html.BeginForm("Update", "Event", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Id)
+
+    <div>
+        <label for="Name">Name:</label>
+        <input type="text" id="Name" name="Name" value="@Model.Name" />
+    </div>
+
+    <div>
+        <label for="Date">Date:</label>
+        <input type="date" id="Date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div>
+        <label for="Location">Location:</label>
+        <input type="text" id="Location" name="Location" value="@Model.Location" />
+    </div>
+
+    <button type="submit">Save Changes</button>
+}
